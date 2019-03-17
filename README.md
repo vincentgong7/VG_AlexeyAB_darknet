@@ -1,4 +1,4 @@
-# Extra convenient functions for a forked AexeyAB Darknet repo.
+# Extra functions for a forked AexeyAB Darknet repo.
 
 As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB Darknet with extra convenient functions.
 
