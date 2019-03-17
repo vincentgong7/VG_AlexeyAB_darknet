@@ -1,3 +1,4 @@
+*.weights
 *.o
 *.dSYM
 *.csv
