@@ -20,6 +20,6 @@ https://pjreddie.com/media/files/yolov3-openimages.weights
 4. Use the command described above to perform batch detecting images.
 
 ## Contact
-Any questions please let me know.
-vincent.gong7[at]gmail.com
+Any questions please let me know.  
+vincent.gong7[at]gmail.com  
 vincentgong.net
