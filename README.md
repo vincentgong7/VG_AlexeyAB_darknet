@@ -21,5 +21,7 @@ https://pjreddie.com/media/files/yolov3-openimages.weights
 
 ## Contact
 Any questions please let me know.
+
 vincent.gong7[at]gmail.com
+
 vincentgong.net
