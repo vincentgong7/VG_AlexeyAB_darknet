@@ -1,0 +1,1 @@
+./darknet detector batch cfg/openimages.data cfg/yolov3-openimages.cfg weights/yolov3-openimages.weights batch ./exp/in_images/ ./exp/out_images/ >./exp/results/result.txt

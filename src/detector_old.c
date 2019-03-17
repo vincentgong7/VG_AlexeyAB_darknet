@@ -1,8 +1,7 @@
-// ---- vincent add-----
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-// ---- vincent add end-----
+
 #include "network.h"
 #include "region_layer.h"
 #include "cost_layer.h"
@@ -1190,9 +1189,6 @@ void calc_anchors(char *datacfg, int num_of_clusters, int width, int height, int
 //}
 //#endif // OPENCV
 
-
-// -------- Vincent: adding function for multiple images procession-----------
-// vincent.gong7@gmail.com
 char* concat(const char *s1, const char *s2)
 {
     char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
@@ -1215,206 +1211,6 @@ char* remove_ext(char* mystr) {
         *lastdot = '\0';
     return retstr;
 }
-
-
-void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh,
-    float hier_thresh, int dont_show, int ext_output, int save_labels, char *in_folder, char *out_folder)
-{
-    list *options = read_data_cfg(datacfg);
-    char *name_list = option_find_str(options, "names", "data/names.list");
-    int names_size = 0;
-    char **names = get_labels_custom(name_list, &names_size); //get_labels(name_list);
-
-    image **alphabet = load_alphabet();
-    network net = parse_network_cfg_custom(cfgfile, 1); // set batch=1
-    if (weightfile) {
-        load_weights(&net, weightfile);
-    }
-    //set_batch_network(&net, 1);
-    fuse_conv_batchnorm(net);
-    calculate_binary_weights(net);
-    if (net.layers[net.n - 1].classes != names_size) {
-        printf(" Error: in the file %s number of names %d that isn't equal to classes=%d in the file %s \n",
-            name_list, names_size, net.layers[net.n - 1].classes, cfgfile);
-        if (net.layers[net.n - 1].classes > names_size) getchar();
-    }
-    srand(2222222);
-    double time;
-    char buff[256];
-    char *input = buff;
-//     char *json_buf = NULL;
-//     int json_image_id = 0;
-//     FILE* json_file = NULL;
-//     if (outfile) {
-//         json_file = fopen(outfile, "wb");
-//         char *tmp = "[\n";
-//         fwrite(tmp, sizeof(char), strlen(tmp), json_file);
-//     }
-    int j;
-    float nms = .45;    // 0.4F
-    
-    // -------- Vincent: adding function for multiple images procession-----------
-    // vincent.gong7@gmail.com
-    
-    if(in_folder && out_folder){
-    printf("folder input=%s and output=%s\n", in_folder, out_folder);
-        DIR *d;
-        struct dirent *dir;
-        d = opendir(in_folder);
-        if (d) {
-            while ((dir = readdir(d)) != NULL) {
-            if (strcmp(dir->d_name, ".") == 0) continue;   /* current dir */
-            if (strcmp(dir->d_name, "..") == 0) continue;  /* parent dir  */
-
-//             printf("%s\n", dir->d_name);
-
-        // -------- Vincent: start loop per file -----------
-        char *filebasename = dir->d_name;
-        filename = concat(in_folder, dir->d_name);
-        char *outputfilename = concat(out_folder,filebasename);
-        char *outputfilename_without_ext = remove_ext(outputfilename);
-
-        printf("Start processing %s\n", filename);
-        strncpy(input, filename, 256);
-            if(strlen(input) > 0)
-                if (input[strlen(input) - 1] == 0x0d) input[strlen(input) - 1] = 0;
-
-       //  if(filename){ // Vincent: only run once
-//             strncpy(input, filename, 256);
-//             if(strlen(input) > 0)
-//                 if (input[strlen(input) - 1] == 0x0d) input[strlen(input) - 1] = 0;
-//         } else {
-//             printf("Enter Image Path: ");
-//             fflush(stdout);
-//             input = fgets(input, 256, stdin);
-//             if(!input) return;
-//             strtok(input, "\n");
-//         }
-
-        image im = load_image(input,0,0,net.c);
-        int letterbox = 0;
-        image sized = resize_image(im, net.w, net.h);
-        //image sized = letterbox_image(im, net.w, net.h); letterbox = 1;
-        layer l = net.layers[net.n-1];
-
-        //box *boxes = calloc(l.w*l.h*l.n, sizeof(box));
-        //float **probs = calloc(l.w*l.h*l.n, sizeof(float *));
-        //for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = calloc(l.classes, sizeof(float *));
-
-        float *X = sized.data;
-
-        //time= what_time_is_it_now();
-        double time = get_time_point();
-        network_predict(net, X);
-        //network_predict_image(&net, im); letterbox = 1;
-        printf("%s: Predicted in %lf milli-seconds.\n", input, ((double)get_time_point() - time) / 1000);
-        //printf("%s: Predicted in %f seconds.\n", input, (what_time_is_it_now()-time));
-
-        int nboxes = 0;
-        detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letterbox);
-        if (nms) do_nms_sort(dets, nboxes, l.classes, nms);
-        draw_detections_v3(im, dets, nboxes, thresh, names, alphabet, l.classes, ext_output);
-
-//         save_image(im, "predictions");
-        save_image(im, outputfilename_without_ext);
-
-        if (!dont_show) {
-//             show_image(im, "predictions");
-            show_image(im, outputfilename_without_ext);
-        }
-
-        // pseudo labeling concept - fast.ai
-        if(save_labels)
-        {
-            char labelpath[4096];
-            replace_image_to_label(input, labelpath);
-
-            FILE* fw = fopen(labelpath, "wb");
-            int i;
-            for (i = 0; i < nboxes; ++i) {
-                char buff[1024];
-                int class_id = -1;
-                float prob = 0;
-                for (j = 0; j < l.classes; ++j) {
-                    if (dets[i].prob[j] > thresh && dets[i].prob[j] > prob) {
-                        prob = dets[i].prob[j];
-                        class_id = j;
-                    }
-                }
-                if (class_id >= 0) {
-                    sprintf(buff, "%d %2.4f %2.4f %2.4f %2.4f\n", class_id, dets[i].bbox.x, dets[i].bbox.y, dets[i].bbox.w, dets[i].bbox.h);
-                    fwrite(buff, sizeof(char), strlen(buff), fw);
-                }
-            }
-            fclose(fw);
-        }
-
-        printf("End\n");
-
-        free_detections(dets, nboxes);
-        free_image(im);
-        free_image(sized);
-        //free(boxes);
-        //free_ptrs((void **)probs, l.w*l.h*l.n);
-#ifdef OPENCV
-        if (!dont_show) {
-            cvWaitKey(0);
-            cvDestroyAllWindows();
-        }
-#endif
-
-
-// -------- Vincent: end loop per file -----------
-
-                } //while ((dir = readdir(d)) != NULL)
-        closedir(d);
-        } //if (d)
-    } //if(in_folder)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-
-    // free memory
-    free_ptrs(names, net.layers[net.n - 1].classes);
-    free_list_contents_kvp(options);
-    free_list(options);
-
-    int i;
-    const int nsize = 8;
-    for (j = 0; j < nsize; ++j) {
-        for (i = 32; i < 127; ++i) {
-            free_image(alphabet[j][i]);
-        }
-        free(alphabet[j]);
-    }
-    free(alphabet);
-
-    free_network(net);
-}
-// -------- Vincent: finish add function for multiple images procession-----------
-// vincent.gong7@gmail.com
-
 
 void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh,
                    float hier_thresh, int dont_show, int ext_output, int save_labels, char *in_folder, char *out_folder)
@@ -1740,12 +1536,8 @@ void run_detector(int argc, char **argv)
         if(strlen(weights) > 0)
             if (weights[strlen(weights) - 1] == 0x0d) weights[strlen(weights) - 1] = 0;
     char *filename = (argc > 6) ? argv[6]: 0;
-    //------ vincent start --------
     char *in_folder = (argc > 8) ? argv[7]: 0;
     char *out_folder = (argc > 8) ? argv[8]: 0;
-    if (0 == strcmp(argv[2], "batch")) batch_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, in_folder, out_folder);
-    else
-    //------ vincent end --------
     if(0==strcmp(argv[2], "test")) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, in_folder, out_folder);
     else if(0==strcmp(argv[2], "train")) train_detector(datacfg, cfg, weights, gpus, ngpus, clear, dont_show, calc_map);
     else if(0==strcmp(argv[2], "valid")) validate_detector(datacfg, cfg, weights, outfile);
@@ -1768,4 +1560,3 @@ void run_detector(int argc, char **argv)
     }
     else printf(" There isn't such command: %s", argv[2]);
 }
-
