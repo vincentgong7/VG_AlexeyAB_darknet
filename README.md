@@ -15,7 +15,7 @@ https://github.com/pjreddie/darknet/issues/723
 1. Clone this project.
 2. Download pre-trained weights file into foder **./weights/**. Such as: 
 https://pjreddie.com/media/files/yolov3-openimages.weights
-3. Make the project with command in darknet/ folder: 
+3. Make the project with command in VG_AlexeyAB_darknet/ folder: 
 >make
 4. Use the command described above to perform batch detecting images.
 
