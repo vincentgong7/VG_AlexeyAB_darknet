@@ -10,7 +10,6 @@ As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB 
 
 ## Batch images detector
 Project link: [https://darknet.gong.im/](https://darknet.gong.im/)
-
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
 The **detector** function in AlexeyAB Darknet only support single image. Therefore I added this function into this forked repo. Hope you like it. Please also refer to this post for detail:
