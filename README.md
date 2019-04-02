@@ -28,3 +28,5 @@ https://pjreddie.com/media/files/yolov3-openimages.weights
 Any questions please let me know.
 vincent.gong7[at]gmail.com
 vincentgong.net
+
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
