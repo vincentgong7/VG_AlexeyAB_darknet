@@ -1,5 +1,7 @@
-#  Convenient functions for AexeyAB Darknet.
-Licensed with [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+#  Convenient functions for YOLO based on AexeyAB Darknet.
+
+Licensed with [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
 
 
 
@@ -12,7 +14,7 @@ Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://githu
 
 The **detector** function in AlexeyAB Darknet only support single image. Therefore I added this function into this forked repo. Hope you like it. Please also refer to this post for detail:
 
-    [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
+[https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
 ### Command
 >./darknet detector batch cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights batch exp/in_images/ exp/out_images/ > exp/results/results.txt
@@ -39,5 +41,4 @@ vincent.gong7[at]gmail.com
 
 [http://gong.im](http://gong.im)
 
-[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
