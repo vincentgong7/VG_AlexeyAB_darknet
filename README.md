@@ -4,10 +4,11 @@ As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB 
 
 
 ## Batch images detector
+Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
 The **detector** function in AlexeyAB Darknet only support single image. Therefore I added this function into this forked repo. Hope you like it. Please also refer to this post for detail:
 
-    https://github.com/pjreddie/darknet/issues/723
+    [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
 ### Command
 >./darknet detector batch cfg/coco.data cfg/yolov3.cfg weights/yolov3.weights batch exp/in_images/ exp/out_images/ > exp/results/results.txt
@@ -21,7 +22,7 @@ Parameter explain:
 1. Clone this project.
 2. Download pre-trained weights file into foder **./weights/**. Such as: 
 
-    https://pjreddie.com/media/files/yolov3-openimages.weights
+    [https://pjreddie.com/media/files/yolov3-openimages.weights](https://pjreddie.com/media/files/yolov3-openimages.weights)
 
 3. Make the project with command in darknet/ folder: 
 >make
