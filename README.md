@@ -3,9 +3,10 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 
+
+
 As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB Darknet with extra convenient functions.
 
-=======
 
 ## Batch images detector
 Project link: [https://darknet.gong.im/](https://darknet.gong.im/)
