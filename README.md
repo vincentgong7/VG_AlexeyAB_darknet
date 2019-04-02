@@ -2,6 +2,8 @@
 
 As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB Darknet with extra convenient functions.
 
+Licensed with [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+
 
 ## Batch images detector
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
@@ -35,4 +37,5 @@ vincent.gong7[at]gmail.com
 
 [http://gong.im](http://gong.im)
 
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
