@@ -6,6 +6,10 @@
 
 **You only look once (YOLO)** is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project I improved the YOLO by adding several convenient functions for detecting objects for researches and the development community.
 
+![](https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/1.png){: width=200px}
+![](https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/2.png){: width=200px}
+
+
 The added functions are implemented based on **AlexeyAB**  version of **Darknet**. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet with those convenient functions. This repo will also be updated regularly.
 
 
