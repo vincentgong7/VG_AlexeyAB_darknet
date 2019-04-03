@@ -15,10 +15,9 @@ The added functions are implemented based on **AlexeyAB**  version of **Darknet*
 
 
 ## Batch images detector
-Project link: [https://darknet.gong.im/](https://darknet.gong.im/)
-
-
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
+
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.jpg" alt=""/>
 
 The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. Hope you like it. Please also refer to the post for detail:
 
