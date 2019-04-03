@@ -3,7 +3,7 @@
 *.dSYM
 *.csv
 *.out
-*.png
+# *.png
 *.so
 mnist/
 data/
