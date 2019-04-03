@@ -7,8 +7,9 @@
 **You only look once (YOLO)** is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project I improved the YOLO by adding several convenient functions for detecting objects for researches and the development community.
 
 
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/1.png" alt="" width="400"/>
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/2.png" alt="" width="400"/>
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/1.png" alt="" width="400"/><img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/2.png" alt="" width="400"/>
+
+Figure. Example of Object Detection using Yolo based on the Darknet.
 
 
 The added functions are implemented based on **AlexeyAB**  version of **Darknet**. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet with those convenient functions. This repo will also be updated regularly.
@@ -17,7 +18,10 @@ The added functions are implemented based on **AlexeyAB**  version of **Darknet*
 ## Batch images detector
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.png" alt="" width=80% />
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.png" alt="The process of Batch Detecting using Yolo" width=80% />
+
+Figure. The process of batch detecting images in a folder using Yolo based on the Darknet.
+
 
 The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. Hope you like it. Please also refer to the post for detail:
 
