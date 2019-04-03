@@ -47,4 +47,3 @@ vincent.gong7[at]gmail.com
 
 
 [http://gong.im](http://gong.im)
-
