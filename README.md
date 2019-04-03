@@ -46,4 +46,4 @@ Any questions please let me know.
 vincent.gong7[at]gmail.com
 
 
-[http://gong.im](http://gong.im)
+<img src="https://github.com/vincentgong7/VG_AlexeyAB_darknet/blob/master/exp/example/icon_link.png?raw=true" alt="" width="15" valign = "middle"></img> [Gong.im](http://gong.im)
