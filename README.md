@@ -9,7 +9,7 @@
 ![enter image description here](https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/1.png | width=100)
 
 
-![](https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/2.png | width=100)
+![](https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/2.png)
 
 
 ![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png | width=100)
