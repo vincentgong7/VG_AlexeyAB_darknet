@@ -18,7 +18,7 @@ The added functions are implemented based on **AlexeyAB**  version of **Darknet*
 ## Batch images detector
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.png" alt="" width=80% />
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.png" alt="" width=“80%“ />
 
 Figure. The process of batch detecting images in a folder using Yolo based on the Darknet.
 
