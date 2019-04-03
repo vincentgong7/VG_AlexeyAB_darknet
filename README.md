@@ -1,11 +1,12 @@
 #  Convenient functions for YOLO based on AexeyAB Darknet.
 
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 
+You only look once (YOLO) is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project I improved the YOLO by adding several convenient functions for detecting objects for researches and the development community.
 
-
-As **AlexeyAB updates** frequently, hereby I added a stable version of AlexeyAB Darknet with extra convenient functions.
+The added functions are implemented based on **AlexeyAB **  version of Darkne. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet with those convenient functions.
 
 
 ## Batch images detector
@@ -14,7 +15,7 @@ Project link: [https://darknet.gong.im/](https://darknet.gong.im/)
 
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
-The **detector** function in AlexeyAB Darknet only support single image. Therefore I added this function into this forked repo. Hope you like it. Please also refer to this post for detail:
+The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. Hope you like it. Please also refer to the post for detail:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
@@ -43,4 +44,3 @@ vincent.gong7[at]gmail.com
 
 [http://gong.im](http://gong.im)
 
-[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
