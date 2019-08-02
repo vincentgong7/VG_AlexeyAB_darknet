@@ -1,3 +1,4 @@
+
 #  Convenient functions for YOLO based on AexeyAB Darknet.
 
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
@@ -37,13 +38,21 @@ Parameter explain:
 
 ### Usage
 1. Clone this project.
-2. Download pre-trained weights file into foder **./weights/**. Such as: 
+2. Download pre-trained weights file into folder **./weights/**. Such as: 
 
     [https://pjreddie.com/media/files/yolov3-openimages.weights](https://pjreddie.com/media/files/yolov3-openimages.weights)
 
-3. Make the project with command in darknet/ folder: 
->make
-4. Use the command described above to perform batch detecting images.
+3. Build the project
+	3.1 For linux: Make the project with command in darknet/ folder: 
+	>make
+	
+	3.2 For windows, please modify one line in top in the detector.c, using the header file for Windows.
+	//#include <dirent.h> //for linux, ubuntu, macos
+	#include "dirent_win.h" //for windows
+	
+	Then it can be successfully built on Visual Studio.
+	
+5. Use the command described above to perform batch detecting images.
 
 ## Contact
 Any questions please let me know.
