@@ -1,5 +1,6 @@
 // ---- vincent add-----
-#include <dirent.h>
+#include <dirent.h> // for linux, ubuntu, macos
+//#include "dirent_win.h" // for windows
 #include <stdio.h>
 #include <string.h>
 // ---- vincent add end-----
