@@ -47,7 +47,9 @@ Parameter explain:
 	>make
 	
 	3.2 For windows, please modify one line in top in the detector.c, using the header file for Windows.
+	
 	//#include <dirent.h> //for linux, ubuntu, macos
+	
 	#include "dirent_win.h" //for windows
 	
 	Then it can be successfully built on Visual Studio.
