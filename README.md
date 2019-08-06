@@ -66,3 +66,5 @@ vincent.gong7[at]gmail.com
 :palm_tree: [*Gong.im*](http://gong.im)
 
 <script type="text/javascript" src="//counter.websiteout.net/js/5/4/69/0"></script>
+
+<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=1d77b8&w=a&t=n&d=hUfpL0e-tBg_zcx45xNWS0tq1zo_Jj5POALETOYreCY&co=d1e3f0&cmo=4fd620&cmn=f56b1d'></script>
