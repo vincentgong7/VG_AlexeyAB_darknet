@@ -67,4 +67,4 @@ vincent.gong7[at]gmail.com
 
 <script type="text/javascript" src="//counter.websiteout.net/js/5/4/69/0"></script>
 
-<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=m&d=hUfpL0e-tBg_zcx45xNWS0tq1zo_Jj5POALETOYreCY&co=d1e3f0&cmo=4fd620&cmn=f56b1d'></script>
+<div style="float: left;"><script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=m&d=hUfpL0e-tBg_zcx45xNWS0tq1zo_Jj5POALETOYreCY&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff"></script></div>
