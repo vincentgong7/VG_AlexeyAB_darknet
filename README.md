@@ -43,6 +43,7 @@ Parameter explain:
     [https://pjreddie.com/media/files/yolov3-openimages.weights](https://pjreddie.com/media/files/yolov3-openimages.weights)
 
 3. Build the project
+
 	3.1 For linux: Make the project with command in darknet/ folder: 
 	>make
 	
