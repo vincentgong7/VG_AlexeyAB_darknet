@@ -1,0 +1,33 @@
+[
+{
+ "frame_id":1, 
+ "filename":"sample_imgs/2.jpg", 
+ "objects": [ 
+  {"class_id":8, "name":"boat", "relative_coordinates":{"left_x":1547, "top_y":1126, "width": 298, "height": 149}, "confidence":0.340572}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 128, "top_y":1327, "width":  30, "height":  89}, "confidence":0.973059}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 179, "top_y":1332, "width":  26, "height":  72}, "confidence":0.691108}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x":  79, "top_y":1324, "width":  29, "height":  73}, "confidence":0.665683}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 520, "top_y":1374, "width":  40, "height":  79}, "confidence":0.662653}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 565, "top_y":1367, "width":  36, "height":  84}, "confidence":0.452264}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 521, "top_y":1355, "width":  34, "height":  41}, "confidence":0.410567}, 
+  {"class_id":0, "name":"person", "relative_coordinates":{"left_x": 159, "top_y":1320, "width":  27, "height":  77}, "confidence":0.314586}
+ ] 
+}, 
+{
+ "frame_id":2, 
+ "filename":"sample_imgs/1.jpg", 
+ "objects": [ 
+  {"class_id":75, "name":"vase", "relative_coordinates":{"left_x": 457, "top_y": 119, "width":  17, "height":  36}, "confidence":0.307722}, 
+  {"class_id":75, "name":"vase", "relative_coordinates":{"left_x": 475, "top_y": 138, "width":  10, "height":  15}, "confidence":0.295033}, 
+  {"class_id":73, "name":"book", "relative_coordinates":{"left_x": 291, "top_y": 276, "width":  53, "height":  14}, "confidence":0.778198}, 
+  {"class_id":73, "name":"book", "relative_coordinates":{"left_x": 242, "top_y": 282, "width":  57, "height":  15}, "confidence":0.400859}, 
+  {"class_id":73, "name":"book", "relative_coordinates":{"left_x": 292, "top_y": 284, "width":  54, "height":  11}, "confidence":0.381432}, 
+  {"class_id":73, "name":"book", "relative_coordinates":{"left_x": 306, "top_y": 268, "width":  21, "height":  12}, "confidence":0.257542}, 
+  {"class_id":58, "name":"pottedplant", "relative_coordinates":{"left_x": 233, "top_y": 111, "width": 107, "height": 171}, "confidence":0.659725}, 
+  {"class_id":57, "name":"sofa", "relative_coordinates":{"left_x":   1, "top_y": 225, "width": 291, "height": 133}, "confidence":0.982573}, 
+  {"class_id":56, "name":"chair", "relative_coordinates":{"left_x": 347, "top_y": 234, "width": 234, "height": 190}, "confidence":0.971206}, 
+  {"class_id":56, "name":"chair", "relative_coordinates":{"left_x": 558, "top_y": 229, "width":  53, "height": 136}, "confidence":0.461671}, 
+  {"class_id":45, "name":"bowl", "relative_coordinates":{"left_x": 261, "top_y": 271, "width":  25, "height":  15}, "confidence":0.854210}
+ ] 
+}
+]

@@ -960,6 +960,63 @@ char *detection_to_json(detection *dets, int nboxes, int classes, char **names, 
 }
 
 
+// Vincent version of detection_to_json for batch processing
+char *vincent_detection_to_json(image im, detection *dets, int nboxes, int classes, char **names, long long int frame_id, char *filename)
+{
+    const float thresh = 0.005; // function get_network_boxes() has already filtred dets by actual threshold
+
+    char *send_buf = (char *)calloc(1024, sizeof(char));
+    if (!send_buf) return 0;
+    if (filename) {
+        sprintf(send_buf, "{\n \"frame_id\":%lld, \n \"filename\":\"%s\", \n \"objects\": [ \n", frame_id, filename);
+    }
+    else {
+        sprintf(send_buf, "{\n \"frame_id\":%lld, \n \"objects\": [ \n", frame_id);
+    }
+
+    int i, j;
+    int class_id = -1;
+    for (i = 0; i < nboxes; ++i) {
+        for (j = 0; j < classes; ++j) {
+            int show = strncmp(names[j], "dont_show", 9);
+            if (dets[i].prob[j] > thresh && show)
+            {
+                if (class_id != -1) strcat(send_buf, ", \n");
+                class_id = j;
+                char *buf = (char *)calloc(2048, sizeof(char));
+                if (!buf) return 0;
+                //sprintf(buf, "{\"image_id\":%d, \"category_id\":%d, \"bbox\":[%f, %f, %f, %f], \"score\":%f}",
+                //    image_id, j, dets[i].bbox.x, dets[i].bbox.y, dets[i].bbox.w, dets[i].bbox.h, dets[i].prob[j]);
+
+                // sprintf(buf, "  {\"class_id\":%d, \"name\":\"%s\", \"relative_coordinates\":{\"center_x\":%f, \"center_y\":%f, \"width\":%f, \"height\":%f}, \"confidence\":%f}",
+                //     j, names[j], dets[i].bbox.x, dets[i].bbox.y, dets[i].bbox.w, dets[i].bbox.h, dets[i].prob[j]);
+
+                double left_x = round((dets[i].bbox.x - dets[i].bbox.w / 2)*im.w);
+                double top_y = round((dets[i].bbox.y - dets[i].bbox.h / 2)*im.h);
+                double width = round(dets[i].bbox.w*im.w);
+                double height = round(dets[i].bbox.h*im.h);
+
+                sprintf(buf, "  {\"class_id\":%d, \"name\":\"%s\", \"relative_coordinates\":{\"left_x\":%4.0f, \"top_y\":%4.0f, \"width\":%4.0f, \"height\":%4.0f}, \"confidence\":%f}",
+                    j, names[j], left_x, top_y, width, height, dets[i].prob[j]);
+
+                int send_buf_len = strlen(send_buf);
+                int buf_len = strlen(buf);
+                int total_len = send_buf_len + buf_len + 100;
+                send_buf = (char *)realloc(send_buf, total_len * sizeof(char));
+                if (!send_buf) {
+                    if (buf) free(buf);
+                    return 0;// exit(-1);
+                }
+                strcat(send_buf, buf);
+                free(buf);
+            }
+        }
+    }
+    strcat(send_buf, "\n ] \n}");
+    return send_buf;
+}
+
+
 float *network_predict_image(network *net, image im)
 {
     //image imr = letterbox_image(im, net->w, net->h);

@@ -1,9 +1,3 @@
-// ---- vincent add-----
-#include <dirent.h> // for linux, ubuntu, macos
-//#include "dirent_win.h" // for windows
-#include <stdio.h>
-#include <string.h>
-// ---- vincent add end-----
 #include <stdlib.h>
 #include "darknet.h"
 #include "network.h"
@@ -1550,214 +1544,6 @@ void calc_anchors(char *datacfg, int num_of_clusters, int width, int height, int
 }
 
 
-// -------- Vincent: adding function for multiple images procession-----------
-// vincent.gong7@gmail.com
-char* concat(const char *s1, const char *s2)
-{
-    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
-    // in real code you would check for errors in malloc here
-    strcpy(result, s1);
-    strcat(result, s2);
-    return result;
-}
-
-char* remove_ext(char* mystr) {
-    char *retstr;
-    char *lastdot;
-    if (mystr == NULL)
-         return NULL;
-    if ((retstr = malloc (strlen (mystr) + 1)) == NULL)
-        return NULL;
-    strcpy (retstr, mystr);
-    lastdot = strrchr (retstr, '.');
-    if (lastdot != NULL)
-        *lastdot = '\0';
-    return retstr;
-}
-
-
-void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh,
-    float hier_thresh, int dont_show, int ext_output, int save_labels, char *outfile, int letter_box, int benchmark_layers, 
-    char *in_folder, char *out_folder)
-{
-    list *options = read_data_cfg(datacfg);
-    char *name_list = option_find_str(options, "names", "data/names.list");
-    int names_size = 0;
-    char **names = get_labels_custom(name_list, &names_size); //get_labels(name_list);
-
-    image **alphabet = load_alphabet();
-    network net = parse_network_cfg_custom(cfgfile, 1, 1); // set batch=1
-    if (weightfile) {
-        load_weights(&net, weightfile);
-    }
-    //set_batch_network(&net, 1);
-    fuse_conv_batchnorm(net);
-    calculate_binary_weights(net);
-    if (net.layers[net.n - 1].classes != names_size) {
-        printf(" Error: in the file %s number of names %d that isn't equal to classes=%d in the file %s \n",
-            name_list, names_size, net.layers[net.n - 1].classes, cfgfile);
-        if (net.layers[net.n - 1].classes > names_size) getchar();
-    }
-    srand(2222222);
-    char buff[256];
-    char *input = buff;
-    char *json_buf = NULL;
-    int json_image_id = 0;
-    FILE* json_file = NULL;
-    if (outfile) {
-        json_file = fopen(outfile, "wb");
-        if(!json_file) {
-          error("fopen failed");
-        }
-        char *tmp = "[\n";
-        fwrite(tmp, sizeof(char), strlen(tmp), json_file);
-    }
-    int j;
-    float nms = .45;    // 0.4F
-    
-    // -------- Vincent: start adding function for batch images procession-----------
-    // vincent.gong7@gmail.com
-    
-    if(in_folder && out_folder){
-    printf("folder input=%s and output=%s\n", in_folder, out_folder);
-        DIR *d;
-        struct dirent *dir;
-        d = opendir(in_folder);
-        if (d) {
-            while ((dir = readdir(d)) != NULL) {
-                if (strcmp(dir->d_name, ".") == 0) continue;   /* current dir */
-                if (strcmp(dir->d_name, "..") == 0) continue;  /* parent dir  */
-
-                // printf("%s\n", dir->d_name);
-
-                // -------- Vincent: start loop per file -----------
-                char *filebasename = dir->d_name;
-                filename = concat(in_folder, dir->d_name);
-                char *outputfilename = concat(out_folder,filebasename);
-                char *outputfilename_without_ext = remove_ext(outputfilename);
-
-                printf("Start processing %s\n", filename);
-                strncpy(input, filename, 256);
-                    if(strlen(input) > 0)
-                        if (input[strlen(input) - 1] == 0x0d) input[strlen(input) - 1] = 0;
-
-                image im = load_image(input, 0, 0, net.c);
-                image sized;
-                if(letter_box) sized = letterbox_image(im, net.w, net.h);
-                else sized = resize_image(im, net.w, net.h);
-                layer l = net.layers[net.n - 1];
-
-                //box *boxes = calloc(l.w*l.h*l.n, sizeof(box));
-                //float **probs = calloc(l.w*l.h*l.n, sizeof(float *));
-                //for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = calloc(l.classes, sizeof(float *));
-
-                float *X = sized.data;
-
-                //time= what_time_is_it_now();
-                double time = get_time_point();
-                network_predict(net, X);
-                //network_predict_image(&net, im); letterbox = 1;
-                printf("%s: Predicted in %lf milli-seconds.\n", input, ((double)get_time_point() - time) / 1000);
-                //printf("%s: Predicted in %f seconds.\n", input, (what_time_is_it_now()-time));
-
-                int nboxes = 0;
-                detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letter_box); 
-                if (nms) {
-                    if (l.nms_kind == DEFAULT_NMS) do_nms_sort(dets, nboxes, l.classes, nms);
-                    else diounms_sort(dets, nboxes, l.classes, nms, l.nms_kind, l.beta_nms);
-                }
-                draw_detections_v3(im, dets, nboxes, thresh, names, alphabet, l.classes, ext_output);
-                // save_image(im, "predictions");
-                save_image(im, outputfilename_without_ext);
-
-                if (!dont_show) {
-                    // show_image(im, "predictions");
-                    show_image(im, outputfilename_without_ext);
-                }
-
-                if (json_file) {
-                    if (json_buf) {
-                        char *tmp = ", \n";
-                        fwrite(tmp, sizeof(char), strlen(tmp), json_file);
-                    }
-                    ++json_image_id;
-                    json_buf = vincent_detection_to_json(im, dets, nboxes, l.classes, names, json_image_id, input);
-
-                    fwrite(json_buf, sizeof(char), strlen(json_buf), json_file);
-                    free(json_buf);
-                }
-
-                // pseudo labeling concept - fast.ai
-                if(save_labels)
-                {
-                    char labelpath[4096];
-                    replace_image_to_label(input, labelpath);
-
-                    FILE* fw = fopen(labelpath, "wb");
-                    int i;
-                    for (i = 0; i < nboxes; ++i) {
-                        char buff[1024];
-                        int class_id = -1;
-                        float prob = 0;
-                        for (j = 0; j < l.classes; ++j) {
-                            if (dets[i].prob[j] > thresh && dets[i].prob[j] > prob) {
-                                prob = dets[i].prob[j];
-                                class_id = j;
-                            }
-                        }
-                        if (class_id >= 0) {
-                            sprintf(buff, "%d %2.4f %2.4f %2.4f %2.4f\n", class_id, dets[i].bbox.x, dets[i].bbox.y, dets[i].bbox.w, dets[i].bbox.h);
-                            fwrite(buff, sizeof(char), strlen(buff), fw);
-                        }
-                    }
-                    fclose(fw);
-                }
-
-                printf("End\n");
-
-                free_detections(dets, nboxes);
-                free_image(im);
-                free_image(sized);
-
-                if (!dont_show) {
-                    wait_until_press_key_cv();
-                    destroy_all_windows_cv();
-                }
-
-            // -------- Vincent: end loop per file -----------
-            } //while ((dir = readdir(d)) != NULL)
-        closedir(d);
-        } //if (d)
-    } //if(in_folder)
-    
-    // add the end of json file
-    if (json_file) {
-        char *tmp = "\n]";
-        fwrite(tmp, sizeof(char), strlen(tmp), json_file);
-        fclose(json_file);
-    }
-
-    // free memory
-    free_ptrs(names, net.layers[net.n - 1].classes);
-    free_list_contents_kvp(options);
-    free_list(options);
-
-    int i;
-    const int nsize = 8;
-    for (j = 0; j < nsize; ++j) {
-        for (i = 32; i < 127; ++i) {
-            free_image(alphabet[j][i]);
-        }
-        free(alphabet[j]);
-    }
-    free(alphabet);
-
-    free_network(net);
-}
-// -------- Vincent: finish function for batch images procession-----------
-// vincent.gong7@gmail.com
-
-
 void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh,
     float hier_thresh, int dont_show, int ext_output, int save_labels, char *outfile, int letter_box, int benchmark_layers)
 {
@@ -1847,7 +1633,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
                 fwrite(tmp, sizeof(char), strlen(tmp), json_file);
             }
             ++json_image_id;
-            json_buf = vincent_detection_to_json(im, dets, nboxes, l.classes, names, json_image_id, input);
+            json_buf = detection_to_json(dets, nboxes, l.classes, names, json_image_id, input);
 
             fwrite(json_buf, sizeof(char), strlen(json_buf), json_file);
             free(json_buf);
@@ -2149,12 +1935,6 @@ void run_detector(int argc, char **argv)
         if (strlen(weights) > 0)
             if (weights[strlen(weights) - 1] == 0x0d) weights[strlen(weights) - 1] = 0;
     char *filename = (argc > 6) ? argv[6] : 0;
-    //------ vincent start --------
-    char *in_folder = (argc > 8) ? argv[7]: 0;
-    char *out_folder = (argc > 8) ? argv[8]: 0;
-    if (0 == strcmp(argv[2], "batch")) batch_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, outfile, letter_box, benchmark_layers, in_folder, out_folder);
-    else
-    //------ vincent end --------
     if (0 == strcmp(argv[2], "test")) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, outfile, letter_box, benchmark_layers);
     else if (0 == strcmp(argv[2], "train")) train_detector(datacfg, cfg, weights, gpus, ngpus, clear, dont_show, calc_map, mjpeg_port, show_imgs, benchmark_layers, chart_path);
     else if (0 == strcmp(argv[2], "valid")) validate_detector(datacfg, cfg, weights, outfile);

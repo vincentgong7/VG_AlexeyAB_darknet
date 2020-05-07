@@ -1,0 +1,1 @@
+./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folders ./sample_imgs/ ./output/ -out ./output/result.json -ext_output > ./output/result.txt
