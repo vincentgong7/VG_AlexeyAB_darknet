@@ -1,6 +1,9 @@
 // ---- vincent add-----
+#ifdef WIN32
+#include "dirent_win.h" // for windows
+#else
 #include <dirent.h> // for linux, ubuntu, macos
-//#include "dirent_win.h" // for windows
+#endif
 #include <stdio.h>
 #include <string.h>
 // ---- vincent add end-----
