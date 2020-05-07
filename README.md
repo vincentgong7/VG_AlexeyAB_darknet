@@ -44,18 +44,13 @@ Parameter explain:
 It is a ZIP file, unzip it with the password: **jj113.io**
 
 
-3. Build the project in different ways in Linux and Windows.
+3. Build the project. No need to modify the code either in Linux or in Windows.
 
 	3.1 For linux: Make the project with command in darknet/ folder: 
 	>make
 	
-	3.2 For windows, please modify one line in top in the detector.c, using the header file for Windows.
-	
-	//#include <dirent.h> //for linux, ubuntu, macos
-	
-	#include "dirent_win.h" //for windows
-	
-	Then it can be successfully built on Visual Studio.
+	3.2 For windows.	
+	It can be successfully built on Visual Studio.
 	
 5. Use the command described above to perform batch detecting images.
 
