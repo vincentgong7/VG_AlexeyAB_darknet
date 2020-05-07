@@ -8,7 +8,7 @@
 **You only look once (YOLO)** is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project I improved the YOLO by adding several convenient functions for detecting objects for researches and the development community.
 
 
-<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/yolo_v3/exp/example/1.png" alt="" width="400"/> <img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/yolo_v3/exp/example/2.png" alt="" width="400"/>
+<img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/output/1.jpg" alt="" width="600"/> <img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/output/2.jpg" alt="" width="600"/>
 
 Figure. Example of Object Detection using Yolo based on the Darknet.
 
@@ -24,7 +24,7 @@ Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://githu
 Figure. The process of batch detecting images in a folder using Yolo based on the Darknet.
 
 
-The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the name of image, the detected classes, the confidence and the **bounding box coordinates** in json and text files.
+The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the name of image, the detected classes, the confidence and the <span style="color:blue"> **bounding box coordinates** </span> in **JSON** and **TXT** files.
 Hope you like it. Please also refer to the post for detail:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
