@@ -5,12 +5,12 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 
-**You only look once (YOLO)** is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project I improved the YOLO by adding several convenient functions for detecting objects for researches and the development community.
+**You only look once (YOLO)** is a state-of-the-art, real-time object detection system. It is implemented based on the Darknet, an Open Source Neural Networks in C. In this project, I improved the YOLO by adding several convenient functions for detecting objects for research and the development community.
 
 
 <img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/output/1.jpg" alt="" width="600"/> <img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/master/output/2.jpg" alt="" width="600"/>
 
-Figure. Example of Object Detection using Yolo based on the Darknet.
+Figure 1. Example of Object Detection using Yolo based on the Darknet.
 
 
 The added functions are implemented based on **AlexeyAB**  version of **Darknet**. As it is updated frequently, hereby I publish a stable version of AlexeyAB Darknet Yolo with those convenient functions. This repo will also be updated regularly.
@@ -23,7 +23,7 @@ The added functions are implemented based on **AlexeyAB**  version of **Darknet*
 Figure. The process of batch detecting images in a folder using Yolo based on the Darknet.
 
 
-The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the name of image, the detected classes, the confidence and the <span style="color:blue"> **bounding box coordinates** </span> in **JSON** and **TXT** files.
+The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which supports detecting images in a folder in one time. In the meantime, it exports information including the name of the image, the detected classes, the confidence and the <span style="color:blue"> **bounding box coordinates** </span> in **JSON** and **TXT** files.
 Hope you like it. 
 
 ### Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
