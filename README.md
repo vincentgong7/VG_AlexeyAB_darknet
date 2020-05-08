@@ -17,7 +17,6 @@ The added functions are implemented based on **AlexeyAB**  version of **Darknet*
 
 
 ## Batch images detector
-Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
 <img src="https://raw.githubusercontent.com/vincentgong7/VG_AlexeyAB_darknet/yolo_v3/exp/example/vg_darknet_batch_detector.png" alt="" width="60%" />
 
@@ -25,9 +24,15 @@ Figure. The process of batch detecting images in a folder using Yolo based on th
 
 
 The **detector** function in AlexeyAB Darknet only supports a single image at a time. Therefore I added the batch function into this forked repo, which support detecting images in a folder in one time. In the meantime, it exports information including the name of image, the detected classes, the confidence and the <span style="color:blue"> **bounding box coordinates** </span> in **JSON** and **TXT** files.
-Hope you like it. Please also refer to the post for detail:
+Hope you like it. 
+
+### Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
+
+Please also refer to the post for more information:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
+
+## Usage
 
 ### Command
 >./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folder sample_imgs/ output/ -out output/result.json -ext_output > output/result.txt
@@ -37,11 +42,13 @@ Parameter explain:
 2. The output images are: **output/**
 3. The image name, detected classes, the confidence and the **bounding box coordinates** is saved in: **output/result.txt** and in **output/result.json**
 
-### Usage
+### Installation
 1. Clone this project.
 2. Download pre-trained weights file into folder **./weights/**. Such as:
+
 [https://bit.ly/yolo_v4](https://bit.ly/yolo_v4)
-It is a ZIP file, unzip it with the password: **jj113.io**
+
+It is a ZIP file. Unzip it using the password: **jj113.io**
 
 
 3. Build the project. No need to modify the code either in Linux or in Windows.
@@ -56,6 +63,7 @@ It is a ZIP file, unzip it with the password: **jj113.io**
 
 ## Contact
 Any questions please let me know.
+
 vincent.gong7[at]gmail.com
 
 
