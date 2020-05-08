@@ -45,9 +45,7 @@ Parameter explain:
 ### Installation
 1. Clone this project.
 2. Download pre-trained weights file into folder **./weights/**. Such as:
-
 [https://bit.ly/yolo_v4](https://bit.ly/yolo_v4)
-
 It is a ZIP file. Unzip it using the password: **jj113.io**
 
 
@@ -59,10 +57,12 @@ It is a ZIP file. Unzip it using the password: **jj113.io**
 	3.2 For windows.	
 	It can be successfully built on Visual Studio.
 	
-5. Use the command described above to perform batch detecting images.
+5. Use the command described above to batch process images.
 
 ## Contact
 Any questions please let me know.
+
+If you like it, please also let me know.
 
 vincent.gong7[at]gmail.com
 
