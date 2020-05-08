@@ -413,6 +413,7 @@ layer parse_yolo(list *options, size_params params)
 
     l.label_smooth_eps = option_find_float_quiet(options, "label_smooth_eps", 0.0f);
     l.scale_x_y = option_find_float_quiet(options, "scale_x_y", 1);
+    l.objectness_smooth = option_find_int_quiet(options, "objectness_smooth", 0);
     l.max_delta = option_find_float_quiet(options, "max_delta", FLT_MAX);   // set 10
     l.iou_normalizer = option_find_float_quiet(options, "iou_normalizer", 0.75);
     l.cls_normalizer = option_find_float_quiet(options, "cls_normalizer", 1);
@@ -519,6 +520,7 @@ layer parse_gaussian_yolo(list *options, size_params params) // Gaussian_YOLOv3
 
     l.label_smooth_eps = option_find_float_quiet(options, "label_smooth_eps", 0.0f);
     l.scale_x_y = option_find_float_quiet(options, "scale_x_y", 1);
+    l.objectness_smooth = option_find_int_quiet(options, "objectness_smooth", 0);
     l.max_delta = option_find_float_quiet(options, "max_delta", FLT_MAX);   // set 10
     l.uc_normalizer = option_find_float_quiet(options, "uc_normalizer", 1.0);
     l.iou_normalizer = option_find_float_quiet(options, "iou_normalizer", 0.75);
@@ -850,12 +852,12 @@ layer parse_shortcut(list *options, size_params params, network net)
         exit(0);
     }
 
-    char *weights_normalizion_str = option_find_str_quiet(options, "weights_normalizion", "none");
-    WEIGHTS_NORMALIZATION_T weights_normalizion = NO_NORMALIZATION;
-    if (strcmp(weights_normalizion_str, "relu") == 0 || strcmp(weights_normalizion_str, "avg_relu") == 0) weights_normalizion = RELU_NORMALIZATION;
-    else if (strcmp(weights_normalizion_str, "softmax") == 0) weights_normalizion = SOFTMAX_NORMALIZATION;
+    char *weights_normalization_str = option_find_str_quiet(options, "weights_normalization", "none");
+    WEIGHTS_NORMALIZATION_T weights_normalization = NO_NORMALIZATION;
+    if (strcmp(weights_normalization_str, "relu") == 0 || strcmp(weights_normalization_str, "avg_relu") == 0) weights_normalization = RELU_NORMALIZATION;
+    else if (strcmp(weights_normalization_str, "softmax") == 0) weights_normalization = SOFTMAX_NORMALIZATION;
     else if (strcmp(weights_type_str, "none") != 0) {
-        printf("Error: Incorrect weights_normalizion = %s \n Use one of: none, relu, softmax \n", weights_normalizion_str);
+        printf("Error: Incorrect weights_normalization = %s \n Use one of: none, relu, softmax \n", weights_normalization_str);
         getchar();
         exit(0);
     }
@@ -894,7 +896,7 @@ layer parse_shortcut(list *options, size_params params, network net)
 #endif// GPU
 
     layer s = make_shortcut_layer(params.batch, n, layers, sizes, params.w, params.h, params.c, layers_output, layers_delta,
-        layers_output_gpu, layers_delta_gpu, weights_type, weights_normalizion, activation, params.train);
+        layers_output_gpu, layers_delta_gpu, weights_type, weights_normalization, activation, params.train);
 
     free(layers_output_gpu);
     free(layers_delta_gpu);
@@ -1123,12 +1125,13 @@ void parse_net_options(list *options, network *net)
     net->burn_in = option_find_int_quiet(options, "burn_in", 0);
 #ifdef GPU
     if (net->gpu_index >= 0) {
-        int compute_capability = get_gpu_compute_capability(net->gpu_index);
+        char device_name[1024];
+        int compute_capability = get_gpu_compute_capability(net->gpu_index, device_name);
 #ifdef CUDNN_HALF
         if (compute_capability >= 700) net->cudnn_half = 1;
         else net->cudnn_half = 0;
 #endif// CUDNN_HALF
-        fprintf(stderr, " compute_capability = %d, cudnn_half = %d \n", compute_capability, net->cudnn_half);
+        fprintf(stderr, " %d : compute_capability = %d, cudnn_half = %d, GPU: %s \n", net->gpu_index, compute_capability, net->cudnn_half, device_name);
     }
     else fprintf(stderr, " GPU isn't used \n");
 #endif// GPU
