@@ -1,0 +1,33 @@
+ GPU isn't used 
+mini_batch = 1, batch = 8, time_steps = 1, train = 0 
+nms_kind: greedynms (1), beta = 0.600000 
+nms_kind: greedynms (1), beta = 0.600000 
+nms_kind: greedynms (1), beta = 0.600000 
+
+ seen 64, trained: 32032 K-images (500 Kilo-batches_64) 
+folder input=./sample_imgs/ and output=./output/
+Start processing ./sample_imgs/2.jpg
+./sample_imgs/2.jpg: Predicted in 40499.850000 milli-seconds.
+person: 66.568283%	left_x:   79	top_y: 1324	width:   29	height:   73)
+person: 97.305855%	left_x:  128	top_y: 1327	width:   30	height:   89)
+person: 31.458553%	left_x:  159	top_y: 1320	width:   27	height:   77)
+person: 69.110802%	left_x:  179	top_y: 1332	width:   26	height:   72)
+person: 66.265312%	left_x:  520	top_y: 1374	width:   40	height:   79)
+person: 41.056721%	left_x:  521	top_y: 1355	width:   34	height:   41)
+person: 45.226376%	left_x:  565	top_y: 1367	width:   36	height:   84)
+boat: 34.057201%	left_x: 1547	top_y: 1126	width:  298	height:  149)
+End
+Start processing ./sample_imgs/1.jpg
+./sample_imgs/1.jpg: Predicted in 39800.900000 milli-seconds.
+sofa: 98.257271%	left_x:    1	top_y:  225	width:  291	height:  133)
+pottedplant: 65.972534%	left_x:  233	top_y:  111	width:  107	height:  171)
+book: 40.085949%	left_x:  242	top_y:  282	width:   57	height:   15)
+bowl: 85.421028%	left_x:  261	top_y:  271	width:   25	height:   15)
+book: 77.819801%	left_x:  291	top_y:  276	width:   53	height:   14)
+book: 38.143242%	left_x:  292	top_y:  284	width:   54	height:   11)
+book: 25.754240%	left_x:  306	top_y:  268	width:   21	height:   12)
+chair: 97.120567%	left_x:  347	top_y:  234	width:  234	height:  190)
+vase: 30.772226%	left_x:  457	top_y:  119	width:   17	height:   36)
+vase: 29.503319%	left_x:  475	top_y:  138	width:   10	height:   15)
+chair: 46.167088%	left_x:  558	top_y:  229	width:   53	height:  136)
+End
