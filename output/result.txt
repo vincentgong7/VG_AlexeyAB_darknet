@@ -7,7 +7,7 @@ nms_kind: greedynms (1), beta = 0.600000
  seen 64, trained: 32032 K-images (500 Kilo-batches_64) 
 folder input=./sample_imgs/ and output=./output/
 Start processing ./sample_imgs/2.jpg
-./sample_imgs/2.jpg: Predicted in 39571.776000 milli-seconds.
+./sample_imgs/2.jpg: Predicted in 40946.620000 milli-seconds.
 person: 66.568283%	left_x:   79	top_y: 1324	width:   29	height:   73
 person: 97.305855%	left_x:  128	top_y: 1327	width:   30	height:   89
 person: 31.458553%	left_x:  159	top_y: 1320	width:   27	height:   77
@@ -18,7 +18,7 @@ person: 45.226376%	left_x:  565	top_y: 1367	width:   36	height:   84
 boat: 34.057201%	left_x: 1547	top_y: 1126	width:  298	height:  149
 End
 Start processing ./sample_imgs/1.jpg
-./sample_imgs/1.jpg: Predicted in 38281.044000 milli-seconds.
+./sample_imgs/1.jpg: Predicted in 39889.559000 milli-seconds.
 sofa: 98.257271%	left_x:    1	top_y:  225	width:  291	height:  133
 pottedplant: 65.972534%	left_x:  233	top_y:  111	width:  107	height:  171
 book: 40.085949%	left_x:  242	top_y:  282	width:   57	height:   15

@@ -1559,7 +1559,7 @@ void calc_anchors(char *datacfg, int num_of_clusters, int width, int height, int
 // vincent.gong7@gmail.com
 char* concat(const char *s1, const char *s2)
 {
-    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    char *result = (char*)malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
     // in real code you would check for errors in malloc here
     strcpy(result, s1);
     strcat(result, s2);
