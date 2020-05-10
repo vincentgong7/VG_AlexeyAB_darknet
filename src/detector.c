@@ -1571,7 +1571,7 @@ char* remove_ext(char* mystr) {
     char *lastdot;
     if (mystr == NULL)
          return NULL;
-    if ((retstr = malloc (strlen (mystr) + 1)) == NULL)
+    if ((retstr = (char*)malloc (strlen (mystr) + 1)) == NULL)
         return NULL;
     strcpy (retstr, mystr);
     lastdot = strrchr (retstr, '.');
