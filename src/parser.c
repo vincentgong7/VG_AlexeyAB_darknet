@@ -225,6 +225,7 @@ convolutional_layer parse_convolutional(list *options, size_params params)
     layer.stretch = stretch;
     layer.stretch_sway = stretch_sway;
     layer.angle = option_find_float_quiet(options, "angle", 15);
+    layer.grad_centr = option_find_int_quiet(options, "grad_centr", 0);
 
     if(params.net.adam){
         layer.B1 = params.net.B1;
@@ -356,6 +357,7 @@ int *parse_yolo_mask(char *a, int *num)
         int n = 1;
         int i;
         for (i = 0; i < len; ++i) {
+            if (a[i] == '#') break;
             if (a[i] == ',') ++n;
         }
         mask = (int*)xcalloc(n, sizeof(int));
@@ -448,6 +450,7 @@ layer parse_yolo(list *options, size_params params)
     }
 
     l.jitter = option_find_float(options, "jitter", .2);
+    l.resize = option_find_float_quiet(options, "resize", 1.0);
     l.focal_loss = option_find_int_quiet(options, "focal_loss", 0);
 
     l.ignore_thresh = option_find_float(options, "ignore_thresh", .5);
@@ -464,6 +467,7 @@ layer parse_yolo(list *options, size_params params)
         int n = 1;
         int i;
         for (i = 0; i < len; ++i) {
+            if (a[i] == '#') break;
             if (a[i] == ',') ++n;
         }
         for (i = 0; i < n && i < total*2; ++i) {
@@ -484,6 +488,7 @@ int *parse_gaussian_yolo_mask(char *a, int *num) // Gaussian_YOLOv3
         int n = 1;
         int i;
         for (i = 0; i < len; ++i) {
+            if (a[i] == '#') break;
             if (a[i] == ',') ++n;
         }
         mask = (int *)calloc(n, sizeof(int));
@@ -563,6 +568,7 @@ layer parse_gaussian_yolo(list *options, size_params params) // Gaussian_YOLOv3
         iou_loss, l.iou_loss, l.iou_normalizer, l.cls_normalizer, l.scale_x_y, l.yolo_point);
 
     l.jitter = option_find_float(options, "jitter", .2);
+    l.resize = option_find_float_quiet(options, "resize", 1.0);
 
     l.ignore_thresh = option_find_float(options, "ignore_thresh", .5);
     l.truth_thresh = option_find_float(options, "truth_thresh", 1);
@@ -611,6 +617,7 @@ layer parse_region(list *options, size_params params)
     l.focal_loss = option_find_int_quiet(options, "focal_loss", 0);
     //l.max_boxes = option_find_int_quiet(options, "max",30);
     l.jitter = option_find_float(options, "jitter", .2);
+    l.resize = option_find_float_quiet(options, "resize", 1.0);
     l.rescore = option_find_int_quiet(options, "rescore",0);
 
     l.thresh = option_find_float(options, "thresh", .5);
@@ -665,6 +672,7 @@ detection_layer parse_detection(list *options, size_params params)
     layer.noobject_scale = option_find_float(options, "noobject_scale", 1);
     layer.class_scale = option_find_float(options, "class_scale", 1);
     layer.jitter = option_find_float(options, "jitter", .2);
+    layer.resize = option_find_float_quiet(options, "resize", 1.0);
     layer.random = option_find_float_quiet(options, "random", 0);
     layer.reorg = option_find_int_quiet(options, "reorg", 0);
     return layer;
@@ -1149,6 +1157,7 @@ void parse_net_options(list *options, network *net)
             int n = 1;
             int i;
             for (i = 0; i < len; ++i) {
+                if (l[i] == '#') break;
                 if (l[i] == ',') ++n;
             }
             int* steps = (int*)xcalloc(n, sizeof(int));
