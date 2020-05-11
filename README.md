@@ -36,7 +36,7 @@ Please also refer to the post for more information:
 1. The new version based on AlexeyAB Yolo v4.
 2. Compile without change anything on Linux and Windows. Both are tested.
 3. Export the bounding box of detected objects in images to JSON.
-4. Export the bounding box of detected objects in images to TXT.
+4. Export the bounding box of detected objects in images to TXT. 
 
 ## Usage
 
