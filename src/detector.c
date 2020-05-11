@@ -1745,7 +1745,7 @@ void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
     }
 
     // free memory
-    free_ptrs(names, net.layers[net.n - 1].classes);
+    free_ptrs((void**)names, net.layers[net.n - 1].classes);
     free_list_contents_kvp(options);
     free_list(options);
 
