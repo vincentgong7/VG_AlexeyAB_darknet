@@ -76,9 +76,9 @@ vincent.gong7[at]gmail.com
 
 <!-- <img src="https://github.com/vincentgong7/VG_AlexeyAB_darknet/blob/master/exp/example/icon_link.png?raw=true" alt="" width="15" valign = "middle"/> [Gong.im](http://gong.im) -->
 
-:palm_tree: [*Gong.im*](http://gong.im)
+[*Gong.im*](http://gong.im)
 
-:floppy_disk: [Guestbook](https://github.com/vincentgong7/VG_AlexeyAB_darknet/issues/7)
+[Guestbook](https://github.com/vincentgong7/VG_AlexeyAB_darknet/issues/7)
 
 <script type="text/javascript" src="//counter.websiteout.net/js/5/4/69/0"></script>
 <br>
