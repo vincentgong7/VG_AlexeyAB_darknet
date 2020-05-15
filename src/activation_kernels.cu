@@ -40,7 +40,8 @@ __device__ float gelu_activate_kernel(float x){return (0.5*x*(1 + tanhf(0.797885
 __device__ float softplus_kernel(float x, float threshold = 20) {
     if (x > threshold) return x;                // too large
     else if (x < -threshold) return expf(x);    // too small
-    return logf(expf(x) + 1);
+    return log1pf(expf(x));
+    //return logf(expf(x) + 1);
 }
 __device__ float plse_activate_kernel(float x)
 {
@@ -217,9 +218,31 @@ __global__ void activate_array_swish_kernel(float *x, int n, float *output_sigmo
     if (i < n) {
         float x_val = x[i];
         float sigmoid = logistic_activate_kernel(x_val);
-        output_sigmoid_gpu[i] = sigmoid;
+        if (output_sigmoid_gpu) output_sigmoid_gpu[i] = sigmoid;
         output_gpu[i] = x_val * sigmoid;
     }
+}
+
+__device__ float mish_njuffa(float x)
+{
+    float r;
+    float e = expf(x);
+    r = 1.0f / fmaf(fmaf(-0.5f, e, -1.0f), e, -1.0f);
+    r = fmaf(r, x, x);
+    return r;
+}
+
+__device__ float mish_yashas(float x)
+{
+    float e = __expf(x);
+    if (x <= -18.0f)
+        return x * e;
+
+    float n = e * e + 2 * e;
+    if (x <= -5.0f)
+        return x * __fdividef(n, n + 2);
+
+    return x - 2 * __fdividef(x, n + 2);
 }
 
 // https://github.com/digantamisra98/Mish
@@ -229,13 +252,15 @@ __global__ void activate_array_mish_kernel(float *x, int n, float *activation_in
     if (i < n) {
         const float MISH_THRESHOLD = 20;
         float x_val = x[i];
-        activation_input[i] = x_val;    // store value before activation
+        if (activation_input) activation_input[i] = x_val;    // store value before activation
         //output_gpu[i] = x_val * tanh_activate_kernel(logf(1 + expf(x_val)));
 
         // Pytorch: https://github.com/thomasbrandon/mish-cuda/blob/master/csrc/mish.h#L17-L20
         // TF: https://github.com/tensorflow/addons/blob/093cdfa85d334cbe19a37624c33198f3140109ed/tensorflow_addons/custom_ops/activations/cc/kernels/mish_op.h#L40-L49
         // log1p(x) == log(x + 1)
-        output_gpu[i] = x_val * tanh_activate_kernel( softplus_kernel(x_val, MISH_THRESHOLD) );
+        //output_gpu[i] = x_val * tanh_activate_kernel( softplus_kernel(x_val, MISH_THRESHOLD) );
+        output_gpu[i] = mish_yashas(x_val);
+        //output_gpu[i] = mish_njuffa(x_val);
     }
 }
 
@@ -331,7 +356,8 @@ __global__ void gradient_array_mish_kernel(int n, float *activation_input_gpu, f
         // log1p(x) == log(x + 1)
         const float inp = activation_input_gpu[i];
         const float sp = softplus_kernel(inp, MISH_THRESHOLD);
-        const float grad_sp = 1 - expf(-sp);
+        const float grad_sp = -expm1f(-sp);
+        //const float grad_sp = 1 - expf(-sp);
         const float tsp = tanh(sp);
         const float grad_tsp = (1 - tsp*tsp) * grad_sp;
         const float grad = inp * grad_tsp + tsp;
