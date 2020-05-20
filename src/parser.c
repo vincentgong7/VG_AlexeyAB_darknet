@@ -401,7 +401,7 @@ layer parse_yolo(list *options, size_params params)
     int num = total;
     char *a = option_find_str(options, "mask", 0);
     int *mask = parse_yolo_mask(a, &num);
-    int max_boxes = option_find_int_quiet(options, "max", 90);
+    int max_boxes = option_find_int_quiet(options, "max", 200);
     layer l = make_yolo_layer(params.batch, params.w, params.h, num, total, mask, classes, max_boxes);
     if (l.outputs != params.inputs) {
         printf("Error: l.outputs == params.inputs \n");
@@ -506,7 +506,7 @@ int *parse_gaussian_yolo_mask(char *a, int *num) // Gaussian_YOLOv3
 layer parse_gaussian_yolo(list *options, size_params params) // Gaussian_YOLOv3
 {
     int classes = option_find_int(options, "classes", 20);
-    int max_boxes = option_find_int_quiet(options, "max", 90);
+    int max_boxes = option_find_int_quiet(options, "max", 200);
     int total = option_find_int(options, "num", 1);
     int num = total;
 
@@ -600,7 +600,7 @@ layer parse_region(list *options, size_params params)
     int coords = option_find_int(options, "coords", 4);
     int classes = option_find_int(options, "classes", 20);
     int num = option_find_int(options, "num", 1);
-    int max_boxes = option_find_int_quiet(options, "max", 90);
+    int max_boxes = option_find_int_quiet(options, "max", 200);
 
     layer l = make_region_layer(params.batch, params.w, params.h, num, classes, coords, max_boxes);
     if (l.outputs != params.inputs) {
@@ -665,7 +665,7 @@ detection_layer parse_detection(list *options, size_params params)
     layer.softmax = option_find_int(options, "softmax", 0);
     layer.sqrt = option_find_int(options, "sqrt", 0);
 
-    layer.max_boxes = option_find_int_quiet(options, "max",30);
+    layer.max_boxes = option_find_int_quiet(options, "max",200);
     layer.coord_scale = option_find_float(options, "coord_scale", 1);
     layer.forced = option_find_int(options, "forced", 0);
     layer.object_scale = option_find_float(options, "object_scale", 1);
@@ -1118,7 +1118,7 @@ void parse_net_options(list *options, network *net)
     net->resize_step = option_find_float_quiet(options, "resize_step", 32);
     net->attention = option_find_int_quiet(options, "attention", 0);
     net->adversarial_lr = option_find_float_quiet(options, "adversarial_lr", 0);
-    net->max_chart_loss = option_find_float_quiet(options, "max_chart_loss", 5.0);
+    net->max_chart_loss = option_find_float_quiet(options, "max_chart_loss", 20.0);
 
     net->angle = option_find_float_quiet(options, "angle", 0);
     net->aspect = option_find_float_quiet(options, "aspect", 1);
@@ -1457,9 +1457,9 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
 
 #ifdef GPU
         // futher GPU-memory optimization: net.optimized_memory == 2
+        l.optimized_memory = net.optimized_memory;
         if (net.optimized_memory >= 2 && params.train && l.type != DROPOUT)
         {
-            l.optimized_memory = net.optimized_memory;
             if (l.output_gpu) {
                 cuda_free(l.output_gpu);
                 //l.output_gpu = cuda_make_array_pinned(l.output, l.batch*l.outputs); // l.steps
@@ -1696,8 +1696,8 @@ void save_shortcut_weights(layer l, FILE *fp)
     }
 #endif
     int i;
-    for (i = 0; i < l.nweights; ++i) printf(" %f, ", l.weight_updates[i]);
-    printf(" l.nweights = %d - update \n", l.nweights);
+    //if(l.weight_updates) for (i = 0; i < l.nweights; ++i) printf(" %f, ", l.weight_updates[i]);
+    //printf(" l.nweights = %d - update \n", l.nweights);
     for (i = 0; i < l.nweights; ++i) printf(" %f, ", l.weights[i]);
     printf(" l.nweights = %d \n\n", l.nweights);
 
