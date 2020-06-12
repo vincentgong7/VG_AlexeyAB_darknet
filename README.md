@@ -32,7 +32,7 @@ Please also refer to the post for more information:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
-## Update May 07, 2020
+## Update Jun 12, 2020
 1. The new version based on AlexeyAB Yolo v4.
 2. Compile without change anything on Linux and Windows. Both are tested.
 3. Export the bounding box of detected objects in images to JSON.

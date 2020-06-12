@@ -308,16 +308,21 @@ layer parse_conv_lstm(list *options, size_params params)
 
     int output_filters = option_find_int(options, "output", 1);
     int groups = option_find_int_quiet(options, "groups", 1);
-    char *activation_s = option_find_str(options, "activation", "LINEAR");
+    char *activation_s = option_find_str(options, "activation", "linear");
     ACTIVATION activation = get_activation(activation_s);
     int batch_normalize = option_find_int_quiet(options, "batch_normalize", 0);
     int xnor = option_find_int_quiet(options, "xnor", 0);
     int peephole = option_find_int_quiet(options, "peephole", 0);
+    int bottleneck = option_find_int_quiet(options, "bottleneck", 0);
 
-    layer l = make_conv_lstm_layer(params.batch, params.h, params.w, params.c, output_filters, groups, params.time_steps, size, stride, dilation, padding, activation, batch_normalize, peephole, xnor, params.train);
+    layer l = make_conv_lstm_layer(params.batch, params.h, params.w, params.c, output_filters, groups, params.time_steps, size, stride, dilation, padding, activation, batch_normalize, peephole, xnor, bottleneck, params.train);
 
     l.state_constrain = option_find_int_quiet(options, "state_constrain", params.time_steps * 32);
     l.shortcut = option_find_int_quiet(options, "shortcut", 0);
+
+    char *lstm_activation_s = option_find_str(options, "lstm_activation", "tanh");
+    l.lstm_activation = get_activation(lstm_activation_s);
+    l.time_normalizer = option_find_float_quiet(options, "time_normalizer", 1.0);
 
     return l;
 }
@@ -1114,6 +1119,7 @@ void parse_net_options(list *options, network *net)
     else if (cutmix) net->mixup = 2;
     else if (mosaic) net->mixup = 3;
     net->letter_box = option_find_int_quiet(options, "letter_box", 0);
+    net->mosaic_bound = option_find_int_quiet(options, "mosaic_bound", 0);
     net->label_smooth_eps = option_find_float_quiet(options, "label_smooth_eps", 0.0f);
     net->resize_step = option_find_float_quiet(options, "resize_step", 32);
     net->attention = option_find_int_quiet(options, "attention", 0);
@@ -1817,9 +1823,11 @@ void save_weights_upto(network net, char *filename, int cutoff)
                 save_convolutional_weights(*(l.vo), fp);
             }
             save_convolutional_weights(*(l.wf), fp);
-            save_convolutional_weights(*(l.wi), fp);
-            save_convolutional_weights(*(l.wg), fp);
-            save_convolutional_weights(*(l.wo), fp);
+            if (!l.bottleneck) {
+                save_convolutional_weights(*(l.wi), fp);
+                save_convolutional_weights(*(l.wg), fp);
+                save_convolutional_weights(*(l.wo), fp);
+            }
             save_convolutional_weights(*(l.uf), fp);
             save_convolutional_weights(*(l.ui), fp);
             save_convolutional_weights(*(l.ug), fp);
@@ -2079,9 +2087,11 @@ void load_weights_upto(network *net, char *filename, int cutoff)
                 load_convolutional_weights(*(l.vo), fp);
             }
             load_convolutional_weights(*(l.wf), fp);
-            load_convolutional_weights(*(l.wi), fp);
-            load_convolutional_weights(*(l.wg), fp);
-            load_convolutional_weights(*(l.wo), fp);
+            if (!l.bottleneck) {
+                load_convolutional_weights(*(l.wi), fp);
+                load_convolutional_weights(*(l.wg), fp);
+                load_convolutional_weights(*(l.wo), fp);
+            }
             load_convolutional_weights(*(l.uf), fp);
             load_convolutional_weights(*(l.ui), fp);
             load_convolutional_weights(*(l.ug), fp);
