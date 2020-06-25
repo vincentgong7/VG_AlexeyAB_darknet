@@ -104,7 +104,7 @@ typedef struct tree {
 
 // activations.h
 typedef enum {
-    LOGISTIC, RELU, RELU6, RELIE, LINEAR, RAMP, TANH, PLSE, LEAKY, ELU, LOGGY, STAIR, HARDTAN, LHTAN, SELU, GELU, SWISH, MISH, NORM_CHAN, NORM_CHAN_SOFTMAX, NORM_CHAN_SOFTMAX_MAXVAL
+    LOGISTIC, RELU, RELU6, RELIE, LINEAR, RAMP, TANH, PLSE, REVLEAKY, LEAKY, ELU, LOGGY, STAIR, HARDTAN, LHTAN, SELU, GELU, SWISH, MISH, NORM_CHAN, NORM_CHAN_SOFTMAX, NORM_CHAN_SOFTMAX_MAXVAL
 }ACTIVATION;
 
 // parser.h
@@ -180,7 +180,8 @@ typedef enum {
     LOGXENT,
     L2NORM,
     EMPTY,
-    BLANK
+    BLANK,
+    CONTRASTIVE
 } LAYER_TYPE;
 
 // layer.h
@@ -244,7 +245,7 @@ struct layer {
     int antialiasing;
     int maxpool_depth;
     int out_channels;
-    int reverse;
+    float reverse;
     int flatten;
     int spatial;
     int pad;
@@ -363,6 +364,9 @@ struct layer {
     float ** sums;
     float * rand;
     float * cost;
+    int *labels;
+    float *cos_sim;
+    float *p_constrastive;
     float * state;
     float * prev_state;
     float * forgot_state;
@@ -607,6 +611,7 @@ struct layer {
     float * activation_input_gpu;
     float * loss_gpu;
     float * delta_gpu;
+    float * cos_sim_gpu;
     float * rand_gpu;
     float * drop_blocks_scale;
     float * drop_blocks_scale_gpu;
@@ -721,6 +726,8 @@ typedef struct network {
     float max_chart_loss;
     int letter_box;
     int mosaic_bound;
+    int contrastive;
+    int unsupervised;
     float angle;
     float aspect;
     float exposure;
@@ -900,6 +907,7 @@ typedef struct load_args {
     int mosaic_bound;
     int show_imgs;
     int dontuse_opencv;
+    int contrastive;
     float jitter;
     float resize;
     int flip;
