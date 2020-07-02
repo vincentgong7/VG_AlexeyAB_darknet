@@ -32,11 +32,15 @@ Please also refer to the post for more information:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
-## Update Jun 12, 2020
+## Update Jul 03, 2020
 1. The new version based on AlexeyAB Yolo v4.
 2. Compile without change anything on Linux and Windows. Both are tested.
 3. Export the bounding box of detected objects in images to JSON.
 4. Export the bounding box of detected objects in images to TXT. 
+5. Added the Google Colab Demo.
+
+## Google Colab Demo
+[https://bit.ly/vg_yolo_v4_colab](https://bit.ly/vg_yolo_v4_colab)
 
 ## Usage
 
@@ -49,13 +53,21 @@ Parameter explain:
 3. The image name, detected classes, the confidence and the **bounding box coordinates** is saved in: **output/result.txt** and in **output/result.json**
 
 ### Installation
-1. Clone this project.
-2. Download pre-trained weights file into folder **./weights/**. Such as:
-[https://bit.ly/yolo_v4](https://bit.ly/yolo_v4)
-It is a ZIP file. Unzip it using the password: **jj113.io**
+1. Clone this project, or download this project.
+2. Decompress the weight file.
+	>cd ./weights/
+	
+	>7z x yolov4.weights.7z.001
+	
+	It requires the tool of 7z. You may need to install it if you do not have it. Please Google it.
 
 
-3. Build the project. No need to modify the code either in Linux or in Windows.
+3. Build the project.
+	First of all, go back to the root folder of the project.
+	
+	>cd ..
+	
+	Now you should be in the root folder of the project, such as: VG_AlexeyAB_darknet
 
 	3.1 For linux: Make the project with command in darknet/ folder: 
 	>make
