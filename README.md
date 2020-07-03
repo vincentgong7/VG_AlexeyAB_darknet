@@ -108,35 +108,31 @@ Parameter explain:
 
 2. Decompress the weight file.
 
->cd ./weights/
+	>cd ./weights/
+	
+	>7z x yolov4.weights.7z.001
 
->7z x yolov4.weights.7z.001
+	It requires the tool of 7z. You may need to install it if you do not have it.
 
-It requires the tool of 7z. You may need to install it if you do not have it. Please Google it.
-
-  
-  
 
 3. Build the project.
 
-First of all, go back to the root folder of the project.
+	First of all, go back to the root folder of the project.
 
->cd ..
+	>cd ..
 
-Now you should be in the root folder of the project, such as: VG_AlexeyAB_darknet
+	Now you should be in the project root folder of the project, such as: VG\_AlexeyAB\_darknet
 
-  
+	For linux (e.g. Ubuntu): Make the project with command in the project root folder:
+	
+	>make
+	
+	For windows. It can be successfully built on Visual Studio using project file in the folder of:
+	
+	/build/darknet/
 
-3.1 For linux: Make the project with command in darknet/ folder:
-
->make
-
-3.2 For windows.
-
-It can be successfully built on Visual Studio.
-
-5. Use the command described above to batch process images.
-
+4. Use the commandf to batch process images.
+>./darknet detector batch cfg/coco.data cfg/yolov4.cfg weights/yolov4.weights io_folder sample_imgs/ output/ -out output/result.json -ext_output > output/result.txt
   
 
 ## Contact
