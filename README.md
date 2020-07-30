@@ -61,7 +61,7 @@ Please also refer to the post for more information:
 
   
 
-## Update Jul 22, 2020
+## Update Jul 30, 2020
 
 1. The new version based on AlexeyAB Yolo v4.
 
