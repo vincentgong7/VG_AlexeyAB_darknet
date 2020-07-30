@@ -104,7 +104,7 @@ typedef struct tree {
 
 // activations.h
 typedef enum {
-    LOGISTIC, RELU, RELU6, RELIE, LINEAR, RAMP, TANH, PLSE, REVLEAKY, LEAKY, ELU, LOGGY, STAIR, HARDTAN, LHTAN, SELU, GELU, SWISH, MISH, NORM_CHAN, NORM_CHAN_SOFTMAX, NORM_CHAN_SOFTMAX_MAXVAL
+    LOGISTIC, RELU, RELU6, RELIE, LINEAR, RAMP, TANH, PLSE, REVLEAKY, LEAKY, ELU, LOGGY, STAIR, HARDTAN, LHTAN, SELU, GELU, SWISH, MISH, HARD_MISH, NORM_CHAN, NORM_CHAN_SOFTMAX, NORM_CHAN_SOFTMAX_MAXVAL
 }ACTIVATION;
 
 // parser.h
@@ -255,6 +255,7 @@ struct layer {
     int dilation;
     int antialiasing;
     int maxpool_depth;
+    int maxpool_zero_nonmax;
     int out_channels;
     float reverse;
     int flatten;
@@ -984,6 +985,7 @@ LIB_API network *load_network(char *cfg, char *weights, int clear);
 LIB_API network *load_network_custom(char *cfg, char *weights, int clear, int batch);
 LIB_API network *load_network(char *cfg, char *weights, int clear);
 LIB_API void free_network(network net);
+LIB_API void free_network_ptr(network* net);
 
 // network.c
 LIB_API load_args get_base_args(network *net);
