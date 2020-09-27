@@ -147,7 +147,7 @@ typedef struct contrastive_params {
     float sim;
     float exp_sim;
     float P;
-    size_t i, j;
+    int i, j;
     int time_step_i, time_step_j;
 } contrastive_params;
 
@@ -176,6 +176,7 @@ typedef enum {
     GRU,
     LSTM,
     CONV_LSTM,
+    HISTORY,
     CRNN,
     BATCHNORM,
     NETWORK,
@@ -258,6 +259,7 @@ struct layer {
     int maxpool_zero_nonmax;
     int out_channels;
     float reverse;
+    int coordconv;
     int flatten;
     int spatial;
     int pad;
@@ -272,6 +274,7 @@ struct layer {
     int keep_delta_gpu;
     int optimized_memory;
     int steps;
+    int history_size;
     int bottleneck;
     float time_normalizer;
     int state_constrain;
@@ -386,9 +389,12 @@ struct layer {
     float * rand;
     float * cost;
     int *labels;
+    int *class_ids;
+    int contrastive_neg_max;
     float *cos_sim;
     float *exp_cos_sim;
     float *p_constrastive;
+    contrastive_params *contrast_p_gpu;
     float * state;
     float * prev_state;
     float * forgot_state;
@@ -416,7 +422,9 @@ struct layer {
     float max_delta;
     float uc_normalizer;
     float iou_normalizer;
+    float obj_normalizer;
     float cls_normalizer;
+    float delta_normalizer;
     IOU_LOSS iou_loss;
     IOU_LOSS iou_thresh_kind;
     NMS_KIND nms_kind;
@@ -750,6 +758,7 @@ typedef struct network {
     int mosaic_bound;
     int contrastive;
     int contrastive_jit_flip;
+    int contrastive_color;
     int unsupervised;
     float angle;
     float aspect;
@@ -937,6 +946,7 @@ typedef struct load_args {
     int dontuse_opencv;
     int contrastive;
     int contrastive_jit_flip;
+    int contrastive_color;
     float jitter;
     float resize;
     int flip;
@@ -1075,8 +1085,8 @@ void stop_timer_and_show();
 void stop_timer_and_show_name(char *name);
 void show_total_time();
 
-void set_track_id(detection *new_dets, int new_dets_num, float thresh, float sim_thresh, float track_ciou_norm, int deque_size, int dets_for_track, int dets_for_show);
-int fill_remaining_id(detection *new_dets, int new_dets_num, int new_track_id, float thresh);
+LIB_API void set_track_id(detection *new_dets, int new_dets_num, float thresh, float sim_thresh, float track_ciou_norm, int deque_size, int dets_for_track, int dets_for_show);
+LIB_API int fill_remaining_id(detection *new_dets, int new_dets_num, int new_track_id, float thresh);
 
 
 // gemm.h

@@ -569,7 +569,7 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
             float *a = l.weights_gpu + j*l.nweights / l.groups;
             float *b = state.workspace;
             float *c = l.output_gpu + (i*l.groups + j)*n*m;
-            if (l.size == 1) {
+            if (l.size == 1 && l.stride == 1 && l.dilation == 1) {
                 b = im;
             }
             else {
@@ -629,10 +629,18 @@ void forward_convolutional_layer_gpu(convolutional_layer l, network_state state)
         simple_copy_ongpu(l.outputs*l.batch, l.output_gpu, l.input_antialiasing_gpu);
         simple_copy_ongpu(l.input_layer->outputs*l.input_layer->batch, l.input_layer->output_gpu, l.output_gpu);
     }
+
+    if (l.coordconv) {
+        coord_conv_gpu(l.output_gpu, l.outputs*l.batch, l.out_w, l.out_h, l.out_c, l.batch, 0);
+    }
 }
 
 void backward_convolutional_layer_gpu(convolutional_layer l, network_state state)
 {
+    if (l.coordconv) {
+        coord_conv_gpu(l.delta_gpu, l.outputs*l.batch, l.out_w, l.out_h, l.out_c, l.batch, 1);
+    }
+
     if (l.antialiasing) {
         network_state s = { 0 };
         s.train = state.train;
