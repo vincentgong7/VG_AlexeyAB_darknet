@@ -170,3 +170,12 @@ vincent.gong7[at]gmail.com
 <div  style="float: left;"><script  type="text/javascript"  id="clustrmaps"  src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=600&t=m&d=hUfpL0e-tBg_zcx45xNWS0tq1zo_Jj5POALETOYreCY&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff"></script></div>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-38972482-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-38972482-2');
+</script>
