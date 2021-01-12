@@ -49,6 +49,14 @@ Hope you like it.
 
   
 
+## Online Demo (on Google Colab)
+
+<img  src="https://cdn-images-1.medium.com/max/1000/1*Lad06lrjlU9UZgSTHUoyfA.png"  alt=""  width="20%"  />
+
+[https://bit.ly/vg_yolo_v4_colab](https://bit.ly/vg_yolo_v4_colab)
+
+  
+
 ### Github link: [https://github.com/vincentgong7/VG_AlexeyAB_darknet](https://github.com/vincentgong7/VG_AlexeyAB_darknet)
 
   
@@ -59,9 +67,8 @@ Please also refer to the post for more information:
 
 [https://github.com/pjreddie/darknet/issues/723](https://github.com/pjreddie/darknet/issues/723)
 
-  
 
-## Update Sep 28, 2020
+## Update Jan 1, 2021
 
 1. The new version based on AlexeyAB Yolo v4.
 
@@ -72,14 +79,6 @@ Please also refer to the post for more information:
 4. Export the bounding box of detected objects in images to TXT.
 
 5. Added the Google Colab Demo.
-
-  
-
-## Google Colab Demo
-
-<img  src="https://cdn-images-1.medium.com/max/1000/1*Lad06lrjlU9UZgSTHUoyfA.png"  alt=""  width="20%"  />
-
-[https://bit.ly/vg_yolo_v4_colab](https://bit.ly/vg_yolo_v4_colab)
   
 
 ## Usage
