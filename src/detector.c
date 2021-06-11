@@ -32,7 +32,7 @@ int check_mistakes = 0;
 
 static int coco_ids[] = { 1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,31,32,33,34,35,36,37,38,39,40,41,42,43,44,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,67,70,72,73,74,75,76,77,78,79,80,81,82,84,85,86,87,88,89,90 };
 
-void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, int ngpus, int clear, int dont_show, int calc_map, int mjpeg_port, int show_imgs, int benchmark_layers, char* chart_path)
+void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, int ngpus, int clear, int dont_show, int calc_map, int mjpeg_port, int show_imgs, int benchmark_layers, char* chart_path, int save_w)
 {
     list *options = read_data_cfg(datacfg);
     char *train_images = option_find_str(options, "train", "data/train.txt");
@@ -1627,7 +1627,7 @@ char* remove_ext(char* mystr) {
 
 
 void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh,
-    float hier_thresh, int dont_show, int ext_output, int save_labels, char *outfile, int letter_box, int benchmark_layers, 
+    float hier_thresh, int dont_show, int ext_output, int save_labels, char *outfile, int letter_box, int benchmark_layers,
     char *in_folder, char *out_folder)
 {
     list *options = read_data_cfg(datacfg);
@@ -1664,10 +1664,10 @@ void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
     }
     int j;
     float nms = .45;    // 0.4F
-    
+
     // -------- Vincent: start adding function for batch images procession-----------
     // vincent.gong7@gmail.com
-    
+
     if(in_folder && out_folder){
     printf("folder input=%s and output=%s\n", in_folder, out_folder);
         DIR *d;
@@ -1711,7 +1711,7 @@ void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
                 //printf("%s: Predicted in %f seconds.\n", input, (what_time_is_it_now()-time));
 
                 int nboxes = 0;
-                detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letter_box); 
+                detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letter_box);
                 if (nms) {
                     if (l.nms_kind == DEFAULT_NMS) do_nms_sort(dets, nboxes, l.classes, nms);
                     else diounms_sort(dets, nboxes, l.classes, nms, l.nms_kind, l.beta_nms);
@@ -1779,7 +1779,7 @@ void batch_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
         closedir(d);
         } //if (d)
     } //if(in_folder)
-    
+
     // add the end of json file
     if (json_file) {
         char *tmp = "\n]";
@@ -2160,6 +2160,7 @@ void run_detector(int argc, char **argv)
     int map_points = find_int_arg(argc, argv, "-points", 0);
     check_mistakes = find_arg(argc, argv, "-check_mistakes");
     int show_imgs = find_arg(argc, argv, "-show_imgs");
+    int save_w = find_int_arg(argc, argv, "-save_w", 1000);
     int mjpeg_port = find_int_arg(argc, argv, "-mjpeg_port", -1);
     int avgframes = find_int_arg(argc, argv, "-avgframes", 3);
     int dontdraw_bbox = find_arg(argc, argv, "-dontdraw_bbox");
@@ -2226,7 +2227,7 @@ void run_detector(int argc, char **argv)
     else
     //------ vincent end --------
     if (0 == strcmp(argv[2], "test")) test_detector(datacfg, cfg, weights, filename, thresh, hier_thresh, dont_show, ext_output, save_labels, outfile, letter_box, benchmark_layers);
-    else if (0 == strcmp(argv[2], "train")) train_detector(datacfg, cfg, weights, gpus, ngpus, clear, dont_show, calc_map, mjpeg_port, show_imgs, benchmark_layers, chart_path);
+    else if (0 == strcmp(argv[2], "train")) train_detector(datacfg, cfg, weights, gpus, ngpus, clear, dont_show, calc_map, mjpeg_port, show_imgs, benchmark_layers, chart_path, save_w);
     else if (0 == strcmp(argv[2], "valid")) validate_detector(datacfg, cfg, weights, outfile);
     else if (0 == strcmp(argv[2], "recall")) validate_detector_recall(datacfg, cfg, weights);
     else if (0 == strcmp(argv[2], "map")) validate_detector_map(datacfg, cfg, weights, thresh, iou_thresh, map_points, letter_box, NULL);
